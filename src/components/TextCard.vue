@@ -69,7 +69,6 @@ button:active {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  width: 100%;
   padding: 1rem;
   border: 2px solid#2c3e50;
   border-radius: 10px;

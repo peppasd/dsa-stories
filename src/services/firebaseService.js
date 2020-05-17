@@ -1,5 +1,5 @@
 import { auth, db, adminEmail } from "../firebaseConf.js";
-import * as firebase from "firebase/app";
+import firebase from "firebase/app";
 
 class FbAuth {
   static login(password) {
