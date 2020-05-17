@@ -7,11 +7,13 @@
     <div id="text">
       {{ text }}
     </div>
-    <button>Delete</button>
+    <button @click="deletePost">Delete</button>
   </div>
 </template>
 
 <script>
+import { FbDatabase } from "../services/firebaseService.js";
+
 export default {
   name: "TextCard",
   props: {
@@ -19,6 +21,11 @@ export default {
     date: String,
     grad: String,
     text: String
+  },
+  methods: {
+    deletePost: async function() {
+      await FbDatabase.deletePost(this.id);
+    }
   }
 };
 </script>

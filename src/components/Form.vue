@@ -17,7 +17,13 @@
       <div class="form-group">
         <label for="text-input">Your Text</label>
         <br />
-        <textarea class="form-input" id="text-input" type="text" rows="10" placeholder="Hii..."></textarea>
+        <textarea
+          class="form-input"
+          id="text-input"
+          type="text"
+          rows="10"
+          placeholder="Hii..."
+        ></textarea>
         <br />
         <small v-show="error_text">Please enter at least 10 characters</small>
       </div>

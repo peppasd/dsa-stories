@@ -1,4 +1,5 @@
-import { auth, db, adminEmail, timestamp } from "../firebaseConf.js";
+import { auth, db, adminEmail } from "../firebaseConf.js";
+import * as firebase from "firebase/app";
 
 class FbAuth {
   static login(password) {
@@ -25,19 +26,52 @@ class FbDatabase {
   }
 
   static validateText(text) {
-    return typeof(text) == "string" && text.length > 5;
+    return typeof text == "string" && text.length > 5;
   }
 
   static createPost(grad, text) {
-      return db.collection("posts")
-        .add({
-          grad: grad,
-          text: text,
-          date: timestamp()
-        })
-        .catch(function(err) {
-          console.log(err);
-        });
+    return db
+      .collection("posts")
+      .add({
+        grad: grad,
+        text: text,
+        date: firebase.firestore.Timestamp.now()
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+  }
+
+  static async deletePost(id) {
+    return await db
+      .collection("posts")
+      .doc(id)
+      .delete()
+      .catch(function(err) {
+        console.error(err);
+      });
+  }
+
+  static async getPosts() {
+    var result = [];
+    var query = await db
+      .collection("posts")
+      .get()
+      .catch(function(err) {
+        console.error(err);
+      });
+    query.forEach(function(doc) {
+      result.push({
+        id: doc.id,
+        grad: doc.data().grad,
+        text: doc.data().text,
+        date: doc
+          .data()
+          .date.toDate()
+          .toLocaleString()
+      });
+    });
+    return result;
   }
 }
 

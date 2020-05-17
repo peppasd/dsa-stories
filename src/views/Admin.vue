@@ -12,6 +12,7 @@
       <TextCard
         class="card"
         v-for="card in cards"
+        v-bind:id="card.id"
         v-bind:date="card.date"
         v-bind:grad="card.grad"
         v-bind:text="card.text"
@@ -24,7 +25,7 @@
 
 <script>
 import TextCard from "@/components/TextCard.vue";
-import { FbAuth } from "../services/firebaseService.js";
+import { FbAuth, FbDatabase } from "../services/firebaseService.js";
 
 export default {
   name: "Admin",
@@ -35,19 +36,12 @@ export default {
     return {
       error_password: false,
       is_auth: false,
-      cards: [
-        {
-          id: "123456",
-          date: "17-05-2020",
-          grad: "2020c",
-          text:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam diam neque, rhoncus quis euismod non, convallis non sapien. Suspendisse finibus fermentum lacus, laoreet fringilla velit vehicula vitae. Sed quis iaculis nibh. Nullam non dolor quam. Donec pellentesque imperdiet neque, id dignissim ligula efficitur sed. Integer eget ligula mi. Praesent tristique leo eu nunc gravida auctor. Aenean ligula magna, euismod quis nunc vel, blandit tempor risus. Cras vitae sagittis libero. Proin sollicitudin lacinia odio, eget consectetur metus elementum a. "
-        }
-      ]
+      cards: []
     };
   },
-  mounted: function() {
+  mounted: async function() {
     if (FbAuth.isLoggedIn()) {
+      this.cards = await FbDatabase.getPosts();
       this.is_auth = true;
       this.error_password = false;
     }
@@ -58,6 +52,7 @@ export default {
 
       await FbAuth.login(password.value);
       if (FbAuth.isLoggedIn()) {
+        this.cards = await FbDatabase.getPosts();
         this.is_auth = true;
       } else {
         this.error_password = true;
