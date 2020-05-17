@@ -59,6 +59,7 @@ small {
   width: 100%;
   padding: 15px;
   margin-top: 5px;
+  outline: none;
 }
 
 .form-group {
