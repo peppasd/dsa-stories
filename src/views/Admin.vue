@@ -15,7 +15,7 @@
         v-bind:date="card.date"
         v-bind:grad="card.grad"
         v-bind:text="card.text"
-        v-bind:key="card"
+        v-bind:key="card.id"
       />
       <button @click="signOut">Log Out</button>
     </div>
@@ -37,6 +37,7 @@ export default {
       is_auth: false,
       cards: [
         {
+          id: "123456",
           date: "17-05-2020",
           grad: "2020c",
           text:
@@ -46,7 +47,7 @@ export default {
     };
   },
   mounted: function() {
-    if(FbAuth.isLoggedIn()) {
+    if (FbAuth.isLoggedIn()) {
       this.is_auth = true;
       this.error_password = false;
     }
@@ -54,12 +55,11 @@ export default {
   methods: {
     authenticate: async function() {
       const password = document.getElementById("password-input");
-      
+
       await FbAuth.login(password.value);
-      if(FbAuth.isLoggedIn()) {
+      if (FbAuth.isLoggedIn()) {
         this.is_auth = true;
-      }
-      else {
+      } else {
         this.error_password = true;
         password.value = "";
       }

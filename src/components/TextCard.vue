@@ -15,6 +15,7 @@
 export default {
   name: "TextCard",
   props: {
+    id: String,
     date: String,
     grad: String,
     text: String

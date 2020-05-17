@@ -1,41 +1,66 @@
 <template>
-  <div class="form">
-    <div class="form-group">
-      <label for="grad-input">Your Grad year</label><br />
-      <input
-        class="form-input"
-        id="grad-input"
-        type="text"
-        placeholder="eg 2001c"
-      /><br />
-      <small v-show="error_grad">Please put a valid grad year</small>
+  <div>
+    <div v-if="!post_thanks" class="form">
+      <div class="form-group">
+        <label for="grad-input">Your Grad year</label>
+        <br />
+        <input
+          spellcheck="false"
+          class="form-input"
+          id="grad-input"
+          type="text"
+          placeholder="eg 2001c"
+        />
+        <br />
+        <small v-show="error_grad">Enter your graduation year</small>
+      </div>
+      <div class="form-group">
+        <label for="text-input">Your Text</label>
+        <br />
+        <textarea class="form-input" id="text-input" type="text" rows="10" placeholder="Hii..."></textarea>
+        <br />
+        <small v-show="error_text">Please enter at least 10 characters</small>
+      </div>
+      <div class="form-group">
+        <button @click="createPost">Submit</button>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="text-input">Your Text</label><br />
-      <textarea
-        class="form-input"
-        id="text-input"
-        type="text"
-        rows="10"
-        placeholder="Hii..."
-      ></textarea
-      ><br />
-      <small v-show="error_text">Please put a text</small>
-    </div>
-    <div class="form-group">
-      <button>Submit</button>
-    </div>
+    <div v-if="post_thanks">Thank you!</div>
   </div>
 </template>
 
 <script>
+import { FbDatabase } from "../services/firebaseService.js";
+
 export default {
   name: "Form",
   data: function() {
     return {
-      error_grad: true,
-      error_text: true
+      error_grad: false,
+      error_text: false,
+      post_thanks: false
     };
+  },
+  methods: {
+    createPost: async function() {
+      const gradInput = document.getElementById("grad-input").value.trim();
+      const textInput = document.getElementById("text-input").value.trim();
+
+      const valGrad = FbDatabase.validateGrad(gradInput);
+      const valText = FbDatabase.validateText(textInput);
+
+      if (!valGrad) {
+        this.error_grad = true;
+      }
+      if (!valText) {
+        this.error_text = true;
+      }
+      if (!valGrad || !valText) return;
+
+      await FbDatabase.createPost(gradInput, textInput);
+
+      this.post_thanks = true;
+    }
   }
 };
 </script>
