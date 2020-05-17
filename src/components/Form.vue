@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="form">
     <div class="form-group">
       <label for="grad-input">Your Grad year</label><br />
       <input
@@ -50,6 +50,7 @@ button {
   padding: 10px;
   font-size: 1rem;
   transition: 0.1s;
+  outline: none;
 }
 
 button:active {
@@ -80,7 +81,7 @@ small {
   margin-bottom: 1rem;
 }
 
-.container {
+.form {
   display: flex;
   flex-direction: column;
   width: 75vw;

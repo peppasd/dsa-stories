@@ -34,6 +34,11 @@ h3 {
   max-width: 600px;
 }
 
+a {
+  color: #26a69a;
+  outline: none;
+}
+
 .about {
   display: flex;
   flex-flow: column;
