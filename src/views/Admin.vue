@@ -6,24 +6,77 @@
       <input class="form-input" id="password-input" type="password" />
       <br />
       <small v-show="error_password">Not a valid password</small>
-      <button>Authenticate</button>
+      <button @click="authenticate">Authenticate</button>
+    </div>
+    <div v-if="is_auth" class="form-group">
+      <TextCard
+        class="card"
+        v-for="card in cards"
+        v-bind:date="card.date"
+        v-bind:grad="card.grad"
+        v-bind:text="card.text"
+        v-bind:key="card"
+      />
+      <button @click="signOut">Log Out</button>
     </div>
   </div>
 </template>
 
 <script>
+import TextCard from "@/components/TextCard.vue";
+import { FbAuth } from "../services/firebaseService.js";
+
 export default {
   name: "Admin",
+  components: {
+    TextCard
+  },
   data: function() {
     return {
-      error_password: true,
-      is_auth: false
+      error_password: false,
+      is_auth: false,
+      cards: [
+        {
+          date: "17-05-2020",
+          grad: "2020c",
+          text:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam diam neque, rhoncus quis euismod non, convallis non sapien. Suspendisse finibus fermentum lacus, laoreet fringilla velit vehicula vitae. Sed quis iaculis nibh. Nullam non dolor quam. Donec pellentesque imperdiet neque, id dignissim ligula efficitur sed. Integer eget ligula mi. Praesent tristique leo eu nunc gravida auctor. Aenean ligula magna, euismod quis nunc vel, blandit tempor risus. Cras vitae sagittis libero. Proin sollicitudin lacinia odio, eget consectetur metus elementum a. "
+        }
+      ]
     };
+  },
+  mounted: function() {
+    if(FbAuth.isLoggedIn()) {
+      this.is_auth = true;
+      this.error_password = false;
+    }
+  },
+  methods: {
+    authenticate: async function() {
+      const password = document.getElementById("password-input");
+      
+      await FbAuth.login(password.value);
+      if(FbAuth.isLoggedIn()) {
+        this.is_auth = true;
+      }
+      else {
+        this.error_password = true;
+        password.value = "";
+      }
+    },
+    signOut: async function() {
+      await FbAuth.signOut();
+      this.is_auth = false;
+    }
   }
 };
 </script>
 
 <style scoped>
+.card {
+  margin-bottom: 1rem;
+}
+
 button {
   font-family: "DM Mono", monospace;
   float: right;

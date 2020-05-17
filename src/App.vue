@@ -11,7 +11,7 @@
 </template>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=DM+Mono&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;1,500&display=swap");
 
 #app {
   font-family: "DM Mono", monospace;
