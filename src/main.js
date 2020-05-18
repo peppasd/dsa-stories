@@ -1,9 +1,11 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
+import { firestorePlugin } from "vuefire";
 
 //Firebase
 require("./firebaseConf.js");
+Vue.use(firestorePlugin);
 
 Vue.config.productionTip = false;
 

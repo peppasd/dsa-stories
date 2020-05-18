@@ -1,14 +1,8 @@
 <template>
   <div class="admin">
-    <div v-if="!is_auth" class="form-group">
-      <label for="password-input">Password</label>
-      <br />
-      <input class="form-input" id="password-input" type="password" />
-      <br />
-      <small v-show="error_password">Not a valid password</small>
-      <button @click="authenticate">Authenticate</button>
-    </div>
+    <Auth @auth="is_auth = $event"/>
     <div v-if="is_auth" class="form-group">
+      Hiii
       <TextCard
         class="card"
         v-for="card in cards"
@@ -18,51 +12,25 @@
         v-bind:text="card.text"
         v-bind:key="card.id"
       />
-      <button @click="signOut">Log Out</button>
     </div>
   </div>
 </template>
 
 <script>
 import TextCard from "@/components/TextCard.vue";
-import { FbAuth, FbDatabase } from "../services/firebaseService.js";
+import Auth from "../components/Auth.vue";
 
 export default {
   name: "Admin",
   components: {
-    TextCard
+    TextCard,
+    Auth
   },
   data: function() {
     return {
-      error_password: false,
       is_auth: false,
       cards: []
     };
-  },
-  mounted: async function() {
-    if (FbAuth.isLoggedIn()) {
-      this.cards = await FbDatabase.getPosts();
-      this.is_auth = true;
-      this.error_password = false;
-    }
-  },
-  methods: {
-    authenticate: async function() {
-      const password = document.getElementById("password-input");
-
-      await FbAuth.login(password.value);
-      if (FbAuth.isLoggedIn()) {
-        this.cards = await FbDatabase.getPosts();
-        this.is_auth = true;
-      } else {
-        this.error_password = true;
-        password.value = "";
-      }
-    },
-    signOut: async function() {
-      await FbAuth.signOut();
-      this.is_auth = false;
-    }
   }
 };
 </script>
@@ -70,49 +38,6 @@ export default {
 <style scoped>
 .card {
   margin-bottom: 1rem;
-}
-
-button {
-  font-family: "DM Mono", monospace;
-  float: right;
-  border: 2px solid #2c3e50;
-  border-radius: 10px;
-  background: white;
-  padding: 10px;
-  font-size: 1rem;
-  transition: 0.1s;
-  margin-top: 1rem;
-  outline: none;
-}
-
-button:active {
-  background: #00766c;
-  color: white;
-}
-
-small {
-  color: #ef5350;
-}
-
-.form-input:focus {
-  border: 2px solid #26a69a;
-}
-
-.form-input {
-  border: 2px solid #2c3e50;
-  border-radius: 10px;
-  transition: 0.2s;
-  font-family: "DM Mono", monospace;
-  box-sizing: border-box;
-  width: 100%;
-  padding: 15px;
-  margin-top: 5px;
-  outline: none;
-}
-
-.form-group {
-  width: 75vw;
-  max-width: 600px;
 }
 
 .admin {
