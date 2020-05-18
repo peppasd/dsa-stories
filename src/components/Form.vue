@@ -9,7 +9,7 @@
           class="form-input"
           id="grad-input"
           type="text"
-          placeholder="eg 2001c"
+          placeholder="eg 2001c (optional)"
         />
         <br />
         <small v-show="error_grad">Enter your graduation year</small>
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { FbDatabase } from "../services/firebaseService.js";
+import { db, Timestamp } from "../firebaseConf.js";
 
 export default {
   name: "Form",
@@ -49,11 +49,20 @@ export default {
   },
   methods: {
     createPost: async function() {
-      const gradInput = document.getElementById("grad-input").value.trim();
-      const textInput = document.getElementById("text-input").value.trim();
+      var grad = document.getElementById("grad-input").value.trim();
+      const text = document.getElementById("text-input").value.trim();
 
-      const valGrad = FbDatabase.validateGrad(gradInput);
-      const valText = FbDatabase.validateText(textInput);
+      //validate
+      var valGrad = /^[1][9][5-9][0-9][a-e]$|^[2][0][0-1][0-9][a-e]$/.test(
+        grad
+      );
+      const valText = typeof text == "string" && text.length > 5;
+
+      //new: grad optional
+      if (grad === "") {
+        grad = "none";
+        valGrad = true;
+      }
 
       if (!valGrad) {
         this.error_grad = true;
@@ -63,9 +72,18 @@ export default {
       }
       if (!valGrad || !valText) return;
 
-      await FbDatabase.createPost(gradInput, textInput);
-
+      await db
+        .add({
+          grad: grad,
+          text: text,
+          date: Timestamp.now()
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
       this.post_thanks = true;
+      await new Promise(r => setTimeout(r, 5000));
+      this.post_thanks = false;
     }
   }
 };

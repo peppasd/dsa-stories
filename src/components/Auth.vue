@@ -34,10 +34,10 @@ export default {
       const password = document.getElementById("password-input");
 
       await auth
-      .signInWithEmailAndPassword(adminEmail, password.value)
-      .catch(function(error) {
-        console.error(error.message);
-      });
+        .signInWithEmailAndPassword(adminEmail, password.value)
+        .catch(function(error) {
+          console.error(error.message);
+        });
 
       if (auth.currentUser != null) {
         this.is_auth = true;
@@ -51,6 +51,7 @@ export default {
     signOut: async function() {
       await auth.signOut();
       this.is_auth = false;
+      this.$emit("auth", false);
     }
   }
 };
