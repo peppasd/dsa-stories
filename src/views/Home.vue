@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div id="home_text">TODO: Put a text here</div>
+    <div id="home_text">Write anonymously your revelation and we will be publish it on the FB Group: “DSA - Ein online Jahrbuch”! Read more in the “About” section of this page. </div>
     <Form />
   </div>
 </template>
