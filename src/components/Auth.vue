@@ -1,14 +1,21 @@
 <template>
   <div class="auth">
     <div v-if="!is_auth" class="form-group">
-      <label for="password-input">Password</label>
+      <label for="password-input">{{ $t("admin.auth.label") }}</label>
       <br />
-      <input class="form-input" id="password-input" type="password" />
+      <input
+        class="form-input"
+        v-model="password"
+        id="password-input"
+        type="password"
+      />
       <br />
-      <small v-show="error_password">Not a valid password</small>
-      <button @click="authenticate">Authenticate</button>
+      <small v-show="error_password">{{ $t("admin.auth.error") }}</small>
+      <button @click="authenticate">{{ $t("admin.auth.button") }}</button>
     </div>
-    <button v-if="is_auth" @click="signOut">Log Out</button>
+    <button v-if="is_auth" @click="signOut">
+      {{ $t("admin.auth.log_out") }}
+    </button>
   </div>
 </template>
 
@@ -20,7 +27,8 @@ export default {
   data: function() {
     return {
       error_password: false,
-      is_auth: false
+      is_auth: false,
+      password: ""
     };
   },
   created: function() {
@@ -31,20 +39,19 @@ export default {
   },
   methods: {
     authenticate: async function() {
-      const password = document.getElementById("password-input");
-
       await auth
-        .signInWithEmailAndPassword(adminEmail, password.value)
+        .signInWithEmailAndPassword(adminEmail, this.password)
         .catch(function(error) {
           console.error(error.message);
         });
 
       if (auth.currentUser != null) {
         this.is_auth = true;
+        this.password = "";
         this.$emit("auth", true);
       } else {
         this.error_password = true;
-        password.value = "";
+        this.password = "";
       }
     },
 
@@ -97,6 +104,7 @@ button:active {
 }
 
 .form-group {
+  text-align: left;
   width: 75vw;
   max-width: 600px;
 }

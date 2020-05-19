@@ -6,7 +6,7 @@
         <div id="date">{{ dateToString(card) }}</div>
       </div>
       <div id="text">{{ card.text }}</div>
-      <button @click="deletePost(card)">Delete</button>
+      <button @click="deletePost(card)">{{ $t("admin.cards.delete") }}</button>
     </div>
   </div>
 </template>
@@ -30,7 +30,7 @@ export default {
     },
 
     deletePost: function(card) {
-      if (confirm("Are you sure?")) {
+      if (confirm(this.$t("admin.cards.confirm"))) {
         db.doc(card.id).delete();
       }
     }

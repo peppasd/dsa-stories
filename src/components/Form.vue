@@ -2,7 +2,7 @@
   <div>
     <div v-if="!post_thanks" class="form">
       <div class="form-group">
-        <label for="grad-input">Your Grad year</label>
+        <label for="grad-input"> {{ $t("home.form.grad.label") }} </label>
         <br />
         <input
           spellcheck="false"
@@ -10,12 +10,13 @@
           id="grad-input"
           type="text"
           placeholder="eg 2001c (optional)"
+          v-model="grad_input"
         />
         <br />
-        <small v-show="error_grad">Enter your graduation year</small>
+        <small v-show="error_grad"> {{ $t("home.form.grad.error") }} </small>
       </div>
       <div class="form-group">
-        <label for="text-input">Your Text</label>
+        <label for="text-input"> {{ $t("home.form.text.label") }} </label>
         <br />
         <textarea
           class="form-input"
@@ -23,15 +24,16 @@
           type="text"
           rows="10"
           placeholder="Hii..."
+          v-model="text_input"
         ></textarea>
         <br />
-        <small v-show="error_text">Please enter at least 10 characters</small>
+        <small v-show="error_text"> {{ $t("home.form.text.error") }} </small>
       </div>
       <div class="form-group">
-        <button @click="createPost">Submit</button>
+        <button @click="createPost">{{ $t("home.form.button") }}</button>
       </div>
     </div>
-    <div v-if="post_thanks">Thank you!</div>
+    <div v-if="post_thanks">{{ $t("home.form.thanks") }}</div>
   </div>
 </template>
 
@@ -44,13 +46,15 @@ export default {
     return {
       error_grad: false,
       error_text: false,
-      post_thanks: false
+      post_thanks: false,
+      grad_input: "",
+      text_input: ""
     };
   },
   methods: {
     createPost: async function() {
-      var grad = document.getElementById("grad-input").value.trim();
-      const text = document.getElementById("text-input").value.trim();
+      var grad = this.grad_input.trim();
+      const text = this.text_input.trim();
 
       //validate
       var valGrad = /^[1][9][5-9][0-9][a-e]?$|^[2][0][0-1][0-9][a-e]?$/.test(

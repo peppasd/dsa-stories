@@ -1,9 +1,7 @@
 <template>
   <div class="home">
     <div id="home_text">
-      Write anonymously your revelation and we will be publish it on the FB
-      Group: “DSA - Ein online Jahrbuch”! Read more in the “About” section of
-      this page.
+      {{ $t("home.text") }}
     </div>
     <Form />
   </div>

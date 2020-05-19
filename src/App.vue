@@ -1,20 +1,32 @@
 <template>
   <div id="app">
     <header>
-      <h1 id="title">DSA - Stories</h1>
+      <h1 id="title">{{ $t("title") }}</h1>
       <div id="nav">
-        <router-link to="/">Home</router-link> |
-        <router-link to="/about">About</router-link>
+        <router-link to="/">{{ $t("nav.home") }}</router-link> |
+        <router-link to="/about">{{ $t("nav.about") }}</router-link> |
+        <LocaleOptions id="lang" />
       </div>
     </header>
     <main id="content"><router-view /></main>
     <footer id="footer">
       <a href="https://www.facebook.com/groups/1274856579385416/">
-        Made for DSA - Ein online Jahrbuch
+        {{ $t("footer") }}
       </a>
     </footer>
   </div>
 </template>
+
+<script>
+import LocaleOptions from "./components/LocaleOptions.vue";
+
+export default {
+  name: "App",
+  components: {
+    LocaleOptions
+  }
+};
+</script>
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;1,500&display=swap");
@@ -31,7 +43,7 @@
 }
 
 #nav {
-  padding-bottom: 3rem;
+  padding-bottom: 2rem;
 }
 
 #nav a {
