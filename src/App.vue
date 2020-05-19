@@ -8,7 +8,11 @@
       </div>
     </header>
     <main id="content"><router-view /></main>
-    <footer id="footer"> <a href="https://www.facebook.com/groups/1274856579385416/"> Made for DSA - Ein online Jahrbuch </a> </footer>
+    <footer id="footer">
+      <a href="https://www.facebook.com/groups/1274856579385416/">
+        Made for DSA - Ein online Jahrbuch
+      </a>
+    </footer>
   </div>
 </template>
 

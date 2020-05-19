@@ -53,7 +53,7 @@ export default {
       const text = document.getElementById("text-input").value.trim();
 
       //validate
-      var valGrad = /^[1][9][5-9][0-9][a-e]$|^[2][0][0-1][0-9][a-e]$/.test(
+      var valGrad = /^[1][9][5-9][0-9][a-e]?$|^[2][0][0-1][0-9][a-e]?$/.test(
         grad
       );
       const valText = typeof text == "string" && text.length > 5;
