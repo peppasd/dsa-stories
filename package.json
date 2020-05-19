@@ -1,7 +1,9 @@
 {
-  "name": "jahrbuch",
-  "version": "0.1.0",
+  "name": "dsa-stories",
+  "version": "1.0.0",
   "private": true,
+  "license": "MIT",
+  "author": "Dimitrios Peppas",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

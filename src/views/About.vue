@@ -14,7 +14,8 @@
     </div>
     <div class="item">
       <h3>{{ $t("about.license.title") }}</h3>
-      {{ $t("about.license.text") }} <a href="#">here</a>. [TODO: github page]
+      {{ $t("about.license.text") }}
+      <a href="https://github.com/peppasd/dsa-stories">here</a>.
     </div>
   </div>
 </template>

@@ -1,24 +1,13 @@
-# jahrbuch
+# DSA-Stories
 
-## Project setup
-```
-npm install
-```
+A project I've made for my old school.
+It allows you send a story from your school years that is going to be shared anonymously in a facebook group with all the graduates.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Description
+Post a story in the root page. View all the stories in `/admin`. (Authentication required) 
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Tools
+Created using the Vue.js CLI and Firebase. Supports i18n.
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Firebase Setup
+You need to create the file `src/firebaseConf.js` with your firebase configuration as seen [here](https://firebase.google.com/docs/web/setup#add-sdks-initialize). Export the Firestore target collection, a Firebase Authentication instance, the Firestore Timestamp class and an email used for authentication. I'll post a demo at some point. 
